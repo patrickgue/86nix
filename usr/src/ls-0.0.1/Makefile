@@ -1,5 +1,5 @@
 main:
-	cc src/ls.c -o src/ls -isysroot 
+	cc src/ls.c -o src/ls 
 clean:
 	rm src/ls
 install:
