@@ -23,7 +23,7 @@ void list_dir_simple(char dir[256], boolean all, boolean type) {
 	  char t;
 	  switch (ep->d_type) {
 	  case T_FILE:
-	    t = 'f';
+	    t = '-';
 	    break;
 	  case T_DIRE:
 	    t = 'd';
