@@ -2,5 +2,17 @@
 
                                   -- Intro --
 				  
-  86nix is a UNIX-like operating system for Intel 8086 compatible micro-
-processors. 
+  86nix is a UNIX-like operating system for Intel 80x86 compatible micro-
+processors. It is a self learning / teaching project in operating system
+design by the author.
+
+                                  -- Design --
+
+  The operating system follows a microkernel design trying to be implementedas little as possible in 80x86 assembly language.
+
+
++--------------------------------+
+|           | Applications       |
+| user mode |--------------------+
+|           | c stdlib | drivers |
+|--------------------------------|
