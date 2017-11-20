@@ -11,8 +11,12 @@ design by the author.
   The operating system follows a microkernel design trying to be implementedas little as possible in 80x86 assembly language.
 
 
-+--------------------------------+
-|           | Applications       |
-| user mode |--------------------+
-|           | c stdlib | drivers |
-|--------------------------------|
+                       +----------------------------------+
+                       |             | Applications       |
+                       | user mode   |--------------------+
+                       |             | c stdlib | drivers |
+                       |----------------------------------|
+                       | kernel mode | memory management  |
+                       +----------------------------------+
+                        Fig. 1
+
