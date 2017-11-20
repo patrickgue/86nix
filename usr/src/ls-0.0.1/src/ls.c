@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <dirent.h>
 #include <string.h>
+#include <unistd.h>
+#include <pwd.h>
+#include <grp.h>
+#include <sys/stat.h>
 
 #define boolean int
 #define true 1
@@ -14,12 +18,14 @@
 void list_dir_simple(char dir[256], boolean all, boolean type) {
   DIR *dp;
   struct dirent *ep;
+  struct stat fileStat;
 
   dp = opendir (dir);
   if (dp != NULL) {
     while (ep = readdir (dp)) {
       if( (strcmp(ep->d_name,".") != 0 && strcmp(ep->d_name,"..") != 0 && ep->d_name[0] != '.') || all == true) {
 	if(type == true) {
+	  stat(ep->d_name, &fileStat);
 	  char t;
 	  switch (ep->d_type) {
 	  case T_FILE:
@@ -37,7 +43,21 @@ void list_dir_simple(char dir[256], boolean all, boolean type) {
 	  default:
 	    t = '?';
 	  }
-	  printf("%c ", t);
+	  printf("%c", t);
+	  printf((fileStat.st_mode & S_IRUSR) ? "r" : "-");
+	  printf((fileStat.st_mode & S_IWUSR) ? "w" : "-");
+	  printf((fileStat.st_mode & S_IXUSR) ? "x" : "-");
+	  printf((fileStat.st_mode & S_IRGRP) ? "r" : "-");
+	  printf((fileStat.st_mode & S_IWGRP) ? "w" : "-");
+	  printf((fileStat.st_mode & S_IXGRP) ? "x" : "-");
+	  printf((fileStat.st_mode & S_IROTH) ? "r" : "-");
+	  printf((fileStat.st_mode & S_IWOTH) ? "w" : "-");
+	  printf((fileStat.st_mode & S_IXOTH) ? "x" : "-");
+	  struct passwd *pw = getpwuid(fileStat.st_uid);
+	  struct group  *gr = getgrgid(fileStat.st_gid);
+
+	  printf(" %10s %10s ", pw->pw_name, gr->gr_name);
+
 	}
 	  
 	puts (ep->d_name);
