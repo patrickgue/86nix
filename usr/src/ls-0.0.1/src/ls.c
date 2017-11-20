@@ -41,7 +41,7 @@ void list_dir_simple(char dir[256], boolean all, boolean type) {
 
   dp = opendir (dir);
   if (dp != NULL) {
-    while (ep = readdir (dp)) {
+    while ((ep = readdir (dp))) {
       if( (strcmp(ep->d_name,".") != 0 && strcmp(ep->d_name,"..") != 0 && ep->d_name[0] != '.') || all == true) {
 	if(type == true) {
 	  stat(ep->d_name, &fileStat);
